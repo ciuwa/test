@@ -70,11 +70,13 @@ Function.prototype.addMethod = function (name, fn) {
   return this
 }
 const methods = new Function()
-methods.addMethod('checkName', function () {
-  console.log('验证名称')
-  return this
-}).addMethod('checkEmail', function(){
-  console.log('验证邮箱')
-  return this
-})
+methods
+  .addMethod('checkName', function () {
+    console.log('验证名称')
+    return this
+  })
+  .addMethod('checkEmail', function () {
+    console.log('验证邮箱')
+    return this
+  })
 methods.checkName().checkEmail()
