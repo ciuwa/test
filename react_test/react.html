@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.min.js"></script>
+    <script src="./js/prop-types.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        class Add extends React.Component {
+            add = () => {
+                this.props.add(this.input.value)
+            }
+            render() {
+                return (
+                    <div>
+                        <input ref={(input) => { this.input = input }} type="text" />
+                        <button onClick={this.add}>Add ({this.props.size})</button>
+                    </div>
+                )
+            }
+        }
+        class List extends React.Component {
+            render() {
+                const { list } = this.props
+                return (
+                    <ul>
+                        {list.map((v, k) => <li key={k}>{v}</li>)}
+                    </ul>
+                )
+            }
+        }
+        class App extends React.Component {
+            state = {
+                list: []
+            }
+            add = (value) => {
+                if (value == '') return
+                const { list } = this.state
+                list.unshift(value)
+                this.setState({ list })
+            }
+            render() {
+                return (
+                    <div>
+                        <h1>Todo List</h1>
+                        <Add add={this.add} size={this.state.list.length} />
+                        <List list={this.state.list} />
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<App />, document.getElementById('app')) 
+    </script>
+</body>
+
+</html>

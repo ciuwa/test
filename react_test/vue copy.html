@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <select v-model="filter[0]">
+            <option value="1">A</option>
+            <option value="2">B</option>
+            <option value="3">C</option>
+        </select>
+        <select v-model="filter[1]">
+            <option value="4">D</option>
+            <option value="5">E</option>
+        </select>
+
+        <table>
+            <tr>
+                <td>名称</td>
+                <td>数据</td>
+                <td>分类</td>
+            </tr>
+            <tr v-for="(v) of table">
+                <td>{{v.name}}</td>
+                <td>{{v.id}}</td>
+                <td>{{}}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        const cate = [
+            { name: 'A', id: 1 },
+            { name: 'B', id: 2 },
+            { name: 'C', id: 3 },
+            { name: 'D', id: 4 },
+            { name: 'E', id: 5 }
+        ];
+        const data = [
+            { name: 'aaa', id: 1 },
+            { name: 'bbb', id: 2 },
+            { name: 'ccc', id: 3 }
+        ];
+        const middle = [
+            { data_id: 1, cate_id: 1 },
+            { data_id: 1, cate_id: 2 },
+            { data_id: 1, cate_id: 3 },
+            { data_id: 2, cate_id: 3 },
+            { data_id: 2, cate_id: 4 },
+            { data_id: 2, cate_id: 5 },
+            { data_id: 3, cate_id: 1 }
+        ];
+
+        function find(select) {
+            return data.filter((v) => {
+                return middle.filter((v) => {
+                    return select.map((v) => {
+                        return parseInt(v)
+                    }).includes(v.cate_id)
+                })
+                .some((vv) => {
+                    return vv.data_id == v.id
+                })
+            })
+        }
+
+        function getCateNameByDataId(data_id){
+            
+        }
+
+        console.log(find([1]))
+
+        const App = {
+            data: {
+                filter: [1, 4],
+                table: []
+            },
+            watch: {
+                filter(a) {
+                    this.table = find(this.filter)
+                }
+            },
+            mounted() {
+                this.table = find(this.filter)
+            }
+        }
+
+        new Vue(App).$mount('#app')
+    </script>
+</body>
+
+</html>

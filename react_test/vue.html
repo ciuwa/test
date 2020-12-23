@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        const cate = [
+            { name: 'A', id: 1 },
+            { name: 'B', id: 2 },
+            { name: 'C', id: 3 },
+            { name: 'D', id: 4 },
+            { name: 'E', id: 5 }
+        ];
+        const data = [
+            { name: 'aaa', id: 1 },
+            { name: 'bbb', id: 2 },
+            { name: 'ccc', id: 3 }
+        ];
+        const middle = [
+            { data_id: 1, cate_id: 1 },
+            { data_id: 1, cate_id: 2 },
+            { data_id: 1, cate_id: 3 },
+            { data_id: 2, cate_id: 3 },
+            { data_id: 2, cate_id: 4 },
+            { data_id: 2, cate_id: 5 },
+            { data_id: 3, cate_id: 1 }
+        ];
+
+        function find(select) {
+            return data.filter((v) => {
+                return middle.filter((v) => {
+                    return select.includes(v.cate_id)
+                }).some((vv) => {
+                    return vv.data_id == v.id
+                })
+            })
+        }
+
+        console.log(find([1]))
+
+        const Add = {
+            props: ['size'],
+            data() {
+                return {
+                    value: ''
+                }
+            },
+            template: `
+                <div>
+                    <input v-model="value"/> 
+                    <button @click="$emit('add', value)">Add ({{size}})</button>
+                </div>
+            `
+        }
+        const List = {
+            props: ['list'],
+            template: `
+                <ul>
+                    <li v-for="(v, i) of list" :key="i">{{v}}</li>
+                </ul>
+            `
+        }
+        const App = {
+            components: { Add, List },
+            data: {
+                list: []
+            },
+            computed: {
+                size() {
+                    return this.list.length
+                }
+            },
+            methods: {
+                add(value) {
+                    if (value != '') this.list.unshift(value)
+                }
+            },
+            template: `
+                <div>
+                    <h1>Todo List</h1>
+                    <Add :size="size" @add="add"></Add>
+                    <List :list="list"></List>
+                </div>
+            `
+        }
+
+        new Vue(App).$mount('#app')
+    </script>
+</body>
+
+</html>
