@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.6.0/dist/vuex.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{$store.state.data}}
+      <test :val="xxx"></test>
+    </div>
+
+    <script type="text/x-template" id="test">
+      <div>
+        {{$store.state.data}}
+        <button @click="click">update</button>
+      </div>
+    </script>
+
+    <script>
+      const store = new Vuex.Store({
+        state: {
+          data: { a: 1, b: 2 }
+        },
+        mutations: {
+          setData(state, data) {
+            state.data = data
+          }
+        }
+      })
+
+      Vue.component('test', {
+        props: ['val'],
+        template: '#test',
+        data() {
+          return {
+            test: '22'
+          }
+        },
+        methods: {
+          click() {
+            this.val.a = 3
+            this.$store.commit('setData', 'xxx')
+          }
+        }
+      })
+
+      new Vue({
+        data: {
+          msg: '22',
+          xxx: {
+            a: 1
+          }
+        },
+        store
+      }).$mount('#app')
+    </script>
+  </body>
+</html>

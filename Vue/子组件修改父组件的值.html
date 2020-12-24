@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
+    
+  </head>
+  <body>
+    <div id="app">
+      {{msg}}
+      <test :val="xxx"></test>
+    </div>
+
+    <script type="text/x-template" id="test">
+      <div>
+        {{val}}
+        <button @click="click">update</button>
+      </div>
+    </script>
+
+    <script>
+      Vue.component('test', {
+        props: ['val'],
+        template: '#test',
+        data() {
+          return {
+            test: '22'
+          }
+        },
+        methods: {
+          click() {
+            this.val.a = 3
+          }
+        }
+      })
+
+      new Vue({
+        data: {
+          msg: '22',
+          xxx: {
+            a: 1
+          }
+        }
+      }).$mount('#app')
+    </script>
+  </body>
+</html>

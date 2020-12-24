@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li>{{form.name}}</li>
+        <li>{{form.sex}}</li>
+        <li>{{form.hoby}}</li>
+      </ul>
+      <input type="button" @click="btn" />
+    </div>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          form: {
+            name: '张三',
+            sex: '女',
+            hoby: ['打篮球', '写作', '编码'],
+            a: {
+              b: 'ab'
+            }
+          }
+        },
+        mounted() {
+          this.form = {
+            name: '张四'
+          }
+          // Vue.set(this.form.hoby, 2, 'sssssssssssssss')
+        },
+        methods: {
+          btn() {}
+        }
+      })
+    </script>
+  </body>
+</html>
